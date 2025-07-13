@@ -1,13 +1,13 @@
 <template>
 <div style="width: 20%; height: 20%;">
-    <pizza-graph v-bind="{data:graphData}" ></pizza-graph>
+    <bar-chart v-bind="{data:graphData,legendPosition:'left'}" ></bar-chart>
+    <pie-chart v-bind="{data:graphData,legendPosition:'right'}" ></pie-chart>
 </div>
 </template>
 
 <script setup>
-import { ShowerHead } from 'lucide-vue-next';
-import PizzaGraph from '../components/graphs/PizzaGraph.vue';
-
+import PieChart from '../components/charts/PieChart.vue';
+import BarChart from '../components/charts/BarChart.vue';
 const graphData = [
     { value:30, dataPresentation: 30 },
     { value:20, dataPresentation: 20 },
