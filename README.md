@@ -17,14 +17,14 @@ To render a chart, pass an array of objects to the chart component's `data` prop
 
 - `dataPresentation` (string): The label or value to display.
 - `value` (number): The numeric value used to calculate the chart.
-
 **Example:**
 ```js
 const graphData = [
-  { value: 30, dataPresentation: "30" },
+    { value: 30, dataPresentation: "30" },
   { value: 20, dataPresentation: "20" },
   { value: 25, dataPresentation: "25" },
   { value: 15, dataPresentation: "15" },
   { value: 10, dataPresentation: "10" }
 ];
 ```
+![alt text](image.png)
