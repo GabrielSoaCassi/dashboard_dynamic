@@ -1,5 +1,30 @@
-# Vue 3 + Vite
+# Dynamic Dashboard
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A dynamic dashboard built with [Vue 3](https://vuejs.org/) and [Vite](https://vitejs.dev/), using [charts.css](https://chartscss.org/) for beautiful, responsive charts. Easily create dynamic charts by passing data as props to components.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## Features
+
+- ⚡️ Fast development with Vite
+- 📊 Dynamic charts using charts.css
+- 🧩 Modular Vue 3 components
+- 🗂️ Simple data-driven chart rendering
+
+## Usage
+
+### Data Structure
+
+To render a chart, pass an array of objects to the chart component's `data` prop. Each object must have:
+
+- `dataPresentation` (string): The label or value to display.
+- `value` (number): The numeric value used to calculate the chart.
+
+**Example:**
+```js
+const graphData = [
+  { value: 30, dataPresentation: "30" },
+  { value: 20, dataPresentation: "20" },
+  { value: 25, dataPresentation: "25" },
+  { value: 15, dataPresentation: "15" },
+  { value: 10, dataPresentation: "10" }
+];
+```
