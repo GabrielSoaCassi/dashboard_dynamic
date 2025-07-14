@@ -1,28 +1,32 @@
 <template>
-    <div :class="['bar-chart-grid',gridTemplate]">
-        <div :class="[`bar-chart-graph-${props.legendPosition}`]">
-            <table :class="['bar-chart-items','charts-css', 'bar', { 'show-heading': showHeading }]">
-                <caption v-if="showHeading" class="bar-chart-caption">{{ headingText }}</caption>
-                <tbody>
-                    <tr v-for="(item, index) in graficoCalculado" :key="index">
-                        <td :style="{
-                            '--start': `${item.start}`,
-                            '--end': `${item.end}`
-                        }">
-                            <span class="data">{{ item?.dataPresentation }}%</span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div :class="[`bar-chart-legend-${props.legendPosition}`]">
-            <ul :class="['charts-css', 'legend', 'legend-square']"
-                :style="{ display: 'grid', fontSize: '1rem', lineHeight: '1.5', justifyContent: 'space-around' }">
-                <li v-for="(item, index) in graficoCalculado" :key="index">
-                    {{ item?.dataPresentation }}%
-                </li>
-            </ul>
-        </div>
+    <div>
+        <table :class="[
+            'charts-css',
+            'bar',
+            `data-${position}`,
+            `data-${spacing}`,
+            orientation,
+            {
+                'show-labels': showLabels,
+                'hide-data': hideData,
+                'show-heading': showHeading,
+                'show-data-on-hover': showDataOnHover,
+                'show-primary-axis': showPrimaryAxis,
+                'show-data-axes': showDataAxes
+
+            }
+        ]">
+            <caption v-if="showHeading" class="bar-chart-caption"><em>{{ headingText }}</em></caption>
+            <tbody>
+                <tr v-for="(item, index) in data" :key="index">
+                    <th scope="row" :class="[{ 'hide-label': item.hideLabel }]"> {{ item?.dataPresentation }}%</th>
+                    <td :style="{ '--size': `calc(${item.value}/${total})` }">
+                        <span :class="['data', { 'outside': item?.outside }]">{{ item?.dataPresentation }}%</span>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 
@@ -34,14 +38,43 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
-    legendPosition: {
+    showPrimaryAxis: {
+        type: Boolean,
+        default: false
+    },
+    showDataAxes: {
+        type: Boolean,
+        default: false
+    },
+    orientation:{
+        type:String,
+        default:'',
+        valdiator: value => ['reverse','reverse-labels','reverse-data']
+    },
+    position: {
         type: String,
-        default: 'bottom',
-        validator: value => ['left', 'right', 'bottom'].includes(value)
+        default: 'start',
+        validator: value => ['start', 'end', 'outside', 'center'].includes(value)
+    },
+    spacing: {
+        type: Number,
+        default: 0
+    },
+    hideData: {
+        type: Boolean,
+        default: false
+    },
+    showLabels: {
+        type: Boolean,
+        default: false
+    },
+    showDataOnHover: {
+        type: Boolean,
+        default: false
     },
     headingText: {
         type: String,
-        default: 'bar Chart'
+        default: 'Bar Chart'
     },
     data: {
         type: Array,
@@ -49,67 +82,8 @@ const props = defineProps({
     }
 });
 const total = computed(() => props.data.reduce((acc, item) => acc + item.value, 0))
-const graficoCalculado = computed(() => {
-    let acumulado = 0;
-    return props.data.map(item => {
-        const start = acumulado / total.value;
-        acumulado += item.value;
-        const end = acumulado / total.value;
 
-        return {
-            ...item,
-            start,
-            end
-        };
-    });
-});
-const gridTemplate = computed(() => {
-    return {
-        'bottom':'grid-template-rows-bottom',
-        'left':'grid-template-columns-left',
-        'right':'grid-template-columns-right'
-    }[props.legendPosition] || 'grid-template-rows-bottom';
-})
 </script>
 
 
-<style>
-.bar-chart-grid {
-    display: grid;
-}
-.grid-template-rows-bottom {
-    grid-template-rows: auto auto;
-    grid-template-columns: auto ;
-}
-.grid-template-columns-left {
-    grid-template-rows: auto auto;
-    grid-template-columns: 10em auto;
-}
-.grid-template-columns-right {
-    grid-template-columns: auto 10em;
-    grid-template-rows: auto auto;
-}
-.bar-chart-graph-bottom {
-    grid-row-start: 1;
-}
-.bar-chart-legend-bottom {
-    padding-top: 1em;
-}
-.bar-chart-graph-left {
-    grid-column-start: 2;
-}
-.bar-chart-legend-left {
-    width:fit-content;
-    height:fit-content;
-    grid-row-start: 1;
-    grid-column-start: 1;
-}
-.bar-chart-graph-right {
-    grid-column-start: 1;
-    grid-row-start: 1;
-}
-.bar-chart-legend-right {
-    grid-row-start: 1;
-    grid-column-start: 2;
-}
-</style>
+<style></style>
