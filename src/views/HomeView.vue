@@ -1,7 +1,7 @@
 <template>
-<div style="width: 20%; height: 20%;">
-    <bar-chart v-bind="{data:graphData,legendPosition:'left'}" ></bar-chart>
-    <pie-chart v-bind="{data:graphData,legendPosition:'right'}" ></pie-chart>
+<div style="width: 40%; height: 20%;">
+    <bar-chart v-bind="{data:graphData}" ></bar-chart>
+    <pie-chart v-bind="{data:graphData}" ></pie-chart>
 </div>
 </template>
 
